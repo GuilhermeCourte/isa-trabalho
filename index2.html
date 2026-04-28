@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adriana Varejão | PP - Senac</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+
+    <style>
+        :root {
+            /* Paleta Adriana Varejão */
+            --bg-gesso: #F4F1E9;     
+            --azul-azulejo: #1B3B6F; 
+            --vermelho-carne: #751414; 
+            --fg-dark: #1A1A1A;      
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-gesso);
+            color: var(--fg-dark);
+            overflow-x: hidden;
+            cursor: none;
+            -ms-overflow-style: none;  /* Oculta no Internet Explorer e Edge antigo */
+    scrollbar-width: none;  /* Oculta no Firefox */
+        }
+
+        /* Oculta a barra de rolagem universalmente */
+html, body {
+    -ms-overflow-style: none;  /* IE e Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari e Opera */
+}
+
+
+html, body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        html::-webkit-scrollbar, body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-gesso);
+            color: var(--fg-dark);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        body::-webkit-scrollbar {
+    display: none; /* Oculta no Chrome, Safari e Opera */
+}
+
+        h1, h2, h3, .font-serif { 
+            font-family: 'Cormorant Garamond', serif; 
+        }
+
+      
+
+
+        
+        .hover-target:hover ~ .cursor-follower { 
+            transform: translate(-50%, -50%) scale(6); 
+            background: var(--azul-azulejo);
+            mix-blend-mode: multiply;
+        }
+
+      * {
+    cursor: none !important; /* Esconde o cursor padrão */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+        nav {
+            mix-blend-mode: difference;
+            color: white;
+            z-index: 50;
+        }
+
+        .reveal-mask {
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+            transition: clip-path 1.5s cubic-bezier(0.85, 0, 0.15, 1);
+        }
+        .reveal-mask.visible {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .horizontal-container {
+            display: flex;
+            width: 505vw; /* Ajustado de 400vw para 300vw (3 painéis) */
+            height: 100vh;
+        }
+        .panel {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-outline-blue {
+            color: transparent;
+            -webkit-text-stroke: 1px var(--azul-azulejo);
+        }
+        
+        .bg-carne { background-color: var(--vermelho-carne); color: var(--bg-gesso); }
+        .bg-azulejo { background-color: var(--azul-azulejo); color: var(--bg-gesso); }
+
+     /* Estilo para a Barra Lateral Ativa (Mais suave e com formato de traço) */
+        .nav-dot.active {
+            opacity: 1;
+        }
+        
+        .nav-dot.active .dot-indicator {
+            height: 32px; /* Estica a bolinha transformando-a num traço */
+            border-radius: 8px; /* Mantém as pontas arredondadas */
+            background-color: white; 
+        }
+
+        .nav-dot.active span {
+            opacity: 1;
+            transform: translateX(0); /* O texto desliza para a posição original */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-follower" id="cursor"></div>
+
+    <nav class="fixed top-0 left-0 w-full p-6 flex justify-between items-center text-sm tracking-widest uppercase hover-target">
+        <div class="font-bold">Adriana Varejão</div>
+        <ul class="flex gap-8 hidden md:flex">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#biografia">Biografia</a></li>
+            <li><a href="#estilo">Estilo</a></li>
+            <li><a href="#obras">Obras</a></li>
+            <li><a href="#critica">Crítica</a></li>
+        </ul>
+    </nav>
+
+<div class="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-6 items-end hidden md:flex mix-blend-difference text-white hover-target py-2">
+        
+        <div class="absolute right-[3.5px] top-2 bottom-2 w-[1px] bg-white/20 z-0"></div>
+
+        <a href="#home" class="nav-dot group flex items-center gap-4 opacity-40 hover:opacity-100 transition-all duration-700 ease-in-out z-10">
+            <span class="text-xs tracking-widest uppercase opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-700 ease-in-out">Home</span>
+            <div class="w-2 h-2 rounded-full bg-white transition-all duration-700 ease-in-out dot-indicator"></div>
+        </a>
+        <a href="#biografia" class="nav-dot group flex items-center gap-4 opacity-40 hover:opacity-100 transition-all duration-700 ease-in-out z-10">
+            <span class="text-xs tracking-widest uppercase opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-700 ease-in-out">Biografia</span>
+            <div class="w-2 h-2 rounded-full bg-white transition-all duration-700 ease-in-out dot-indicator"></div>
+        </a>
+        <a href="#estilo" class="nav-dot group flex items-center gap-4 opacity-40 hover:opacity-100 transition-all duration-700 ease-in-out z-10">
+            <span class="text-xs tracking-widest uppercase opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-700 ease-in-out">Estilo</span>
+            <div class="w-2 h-2 rounded-full bg-white transition-all duration-700 ease-in-out dot-indicator"></div>
+        </a>
+        <a href="#obras" class="nav-dot group flex items-center gap-4 opacity-40 hover:opacity-100 transition-all duration-700 ease-in-out z-10">
+            <span class="text-xs tracking-widest uppercase opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-700 ease-in-out">Obras</span>
+            <div class="w-2 h-2 rounded-full bg-white transition-all duration-700 ease-in-out dot-indicator"></div>
+        </a>
+        <a href="#critica" class="nav-dot group flex items-center gap-4 opacity-40 hover:opacity-100 transition-all duration-700 ease-in-out z-10">
+            <span class="text-xs tracking-widest uppercase opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-700 ease-in-out">Crítica</span>
+            <div class="w-2 h-2 rounded-full bg-white transition-all duration-700 ease-in-out dot-indicator"></div>
+        </a>
+        <a href="#referencias" class="nav-dot group flex items-center gap-4 opacity-40 hover:opacity-100 transition-all duration-700 ease-in-out z-10">
+            <span class="text-xs tracking-widest uppercase opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-700 ease-in-out">Referências</span>
+            <div class="w-2 h-2 rounded-full bg-white transition-all duration-700 ease-in-out dot-indicator"></div>
+        </a>
+    </div>
+
+    <section id="home" class="h-screen w-full flex flex-col justify-center items-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 flex flex-col justify-center items-center pointer-events-none">
+            <h1 class="font-serif text-[25vw] leading-none text-outline-blue whitespace-nowrap parallax-bg"></h1>
+        </div>
+
+        <div class="z-10 text-center flex flex-col items-center">
+    <p class="uppercase tracking-[0.4em] text-sm mb-6 text-[#1B3B6F] title-anim leading-loose">
+        Projeto de história da arte<br>
+        Publicidade e Propaganda 1° Semestre - Senac Nações Unidas
+    </p>
+
+    <div class="overflow-hidden">
+        <h1 class="font-serif text-[10vw] leading-none text-[#751414] title-anim">ADRIANA</h1>
+    </div>
+    <div class="overflow-hidden">
+        <h1 class="font-serif text-[10vw] leading-none italic title-anim">VAREJÃO</h1>
+    </div>
+
+    <div class="overflow-hidden mt-8 max-w-3xl">
+        <p class="text-sm md:text-base text-gray-600 title-anim leading-relaxed px-4">
+            Uma das mais importantes artistas plásticas contemporâneas brasileiras,<br class="hidden md:block"> 
+            conhecida por explorar história, corpo e memória em suas obras.
+        </p>
+    </div>
+</div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-60">
+            <span class="w-[1px] h-16 bg-black mb-4 scale-y-anim origin-top"></span>
+            <span class="text-xs tracking-widest uppercase"></span>
+        </div>
+    </section>
+
+    <section id="biografia" class="py-32 px-10 max-w-7xl mx-auto flex flex-col md:flex-row gap-20 items-center">
+        <div class="w-full md:w-1/2 reveal-mask scroll-reveal aspect-[420/700] bg-gray-200">
+            <img src="adriana-bio.jpeg" alt="Placeholder 1" class="w-full h-full object-cover">
+        </div>
+        
+        <div class="w-full md:w-1/2">
+            <h2 class="font-serif text-6xl mb-8 italic text-[#1B3B6F]">Biografia</h2>
+            <div class="text-lg leading-relaxed space-y-6">
+                <p>Adriana Varejão (1964, Rio de Janeiro) é uma das principais artistas contemporâneas do Brasil, com reconhecimento internacional. Filha de um piloto da aeronáutica e de uma nutricionista fez cursinho pré-vestibular no colégio Impacto. Foi cursar engenharia na Puc. No meio tempo, fez cursos de arte. E pronto. “Acho que um dia eu acordei e virei artista”, brinca. Alugou um ateliê e começou a produzir.</p>
+                <p>Iniciou sua formação na Escola de Artes Visuais do Parque Lage nos anos 1980 e realizou sua primeira exposição individual em 1988. Sua obra se destaca pelo caráter visceral, explorando temas como colonização, barroco, azulejaria e o corpo humano, com representações de carne e interiores.
+Ganhou projeção nos anos 1990 ao participar de importantes exposições, como a Bienal de São Paulo e outras bienais internacionais.</p>
+<p>Atualmente, tem obras em coleções de grandes museus e é amplamente valorizada no mercado de arte. No Brasil, possui um pavilhão dedicado ao seu trabalho no Instituto Inhotim.</p>
+                <p class="font-serif text-2xl italic text-[#751414] border-l-2 border-[#751414] pl-6 mt-8">
+                    A densidade simbólica de Adriana Varejão é tanta que escandaliza os espectadores, mas ao mesmo tempo é responsável pela conquista de admiração e respeito cada vez maiores nos cenários internacionais da arte.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="estilo" class="py-32 bg-carne relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-10 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-[#F4F1E9]/30 pb-10 gap-8">
+    <h2 class="font-serif text-7xl md:text-8xl leading-none">Estilo<br><span class="italic opacity-80">Artístico</span></h2>
+    
+    <p class="uppercase tracking-[0.15em] text-xs md:text-sm max-w-md text-right leading-loose opacity-90">
+        O estilo artístico de Adriana Varejão é marcado por uma estética visceral e crítica, 
+        unindo pintura contemporânea, barroco e referências coloniais. Ela utiliza temas como a 
+        azulejaria portuguesa, carnes, vísceras e fissuras para explorar temas como o colonialismo, 
+        a miscigenação e a violência na história brasileira, criando obras tridimensionais que 
+        desafiam o espectador.
+    </p>
+</div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                <div class="hover-target">
+                    <h3 class="font-serif text-3xl mb-4 border-b border-white/20 pb-2">Visceralidade e "Carne"</h3>
+                    <p class="text-sm opacity-80 leading-loose">Uso frequente de representações de carne crua, vísceras e sangue (esculturas e pinturas), simbolizando a violência física e o trauma da colonização.</p>
+                </div>
+                <div class="hover-target">
+                    <h3 class="font-serif text-3xl mb-4 border-b border-white/20 pb-2">Azulejaria e Baroque</h3>
+                    <p class="text-sm opacity-80 leading-loose">A artista reinterpreta azulejos portugueses e elementos do barroco mineiro, simulando superfícies com craquelês e técnicas de trompe l'oeil para enganar os sentidos.</p>
+                </div>
+                <div class="hover-target">
+                    <h3 class="font-serif text-3xl mb-4 border-b border-white/20 pb-2">Crítica Colonial</h3>
+                    <p class="text-sm opacity-80 leading-loose">Suas obras questionam a narrativa histórica oficial, destacando a miscigenação, o apagamento cultural e a brutalidade da escravidão.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="obras" class="bg-black text-white h-screen">
+    <div id="horizontal-wrapper" class="overflow-hidden">
+        <div class="horizontal-container">
+            
+            <section class="panel bg-[#0a0a0a] px-20">
+                <h2 class="font-serif text-[8vw] leading-none text-outline-blue">ACERVO</h2>
+                <h2 class="font-serif text-[8vw] leading-none italic ml-20">SELECIONADO</h2>
+            </section>
+
+            <section class="panel bg-[#111] px-20 flex gap-16 items-center">
+                <div class="w-1/2 aspect-[4/5] max-w-md bg-zinc-900/50 reveal-mask scroll-reveal overflow-hidden relative p-4 flex justify-center items-center">
+                    <img src="ob1.jpg" class="w-full h-full object-contain img-parallax">
+                </div>
+                <div class="w-1/2 max-w-lg">
+                    <span class="text-xs tracking-[0.2em] uppercase text-[#1B3B6F]">Adriana Varejão, 2009</span>
+                    <h3 class="font-serif text-6xl mt-4 mb-6">Saunas e Banhos</h3>
+                    <p class="text-gray-400">A série Saunas e Banhos (2009) de Adriana Varejão apresenta pinturas a óleo de espaços arquitetônicos azulejados, límpidos e assépticos, focando na geometria e na luz. Diferente de obras anteriores com vísceras, esta série evoca a intimidade, o banho e o cuidado corporal, explorando a tradição pictórica e a perspectiva.</p>
+                </div>
+            </section>
+
+            <section class="panel bg-[#151515] px-20 flex gap-16 items-center flex-row-reverse">
+                <div class="w-1/2 aspect-[4/5] max-w-md bg-zinc-900/50 reveal-mask scroll-reveal overflow-hidden relative p-4 flex justify-center items-center">
+                    <img src="ob2.jpg" class="w-full h-full object-contain img-parallax">
+                </div>
+                <div class="w-1/2 max-w-lg">
+                    <span class="text-xs tracking-[0.2em] uppercase text-[#751414]">Adriana Varejão, 1987</span>
+                    <h3 class="font-serif text-6xl mt-4 mb-6 italic">Natividade</h3>
+                    <p class="text-gray-400">Natividade" (1987) é uma das primeiras obras de Adriana Varejão, pintada aos 23 anos após uma viagem a Minas Gerais, marcando o início de sua investigação sobre o Barroco brasileiro. A obra utiliza tintas a óleo espessas para criar texturas tridimensionais, retratando temas coloniais com uma visceralidade que antecipa sua famosa série de "azulejos" que revelam carne e sangue.</p>
+                </div>
+            </section>
+
+            <section class="panel bg-[#111] px-20 flex gap-16 items-center">
+                <div class="w-1/2 aspect-[4/5] max-w-md bg-zinc-900/50 reveal-mask scroll-reveal overflow-hidden relative p-4 flex justify-center items-center">
+                    <img src="ob3.jpg" class="w-full h-full object-contain img-parallax">
+                </div>
+                <div class="w-1/2 max-w-lg">
+                    <span class="text-xs tracking-[0.2em] uppercase text-[#751414]">Adriana Varejão, 1993</span>
+                    <h3 class="font-serif text-6xl mt-4 mb-6">Varal</h3>
+                    <p class="text-gray-400">A obra representa a colonização brasileira de forma visceral e crítica, utilizando a metáfora do "varal" para expor, em carne viva, a violência, a miscigenação e a história colonial. A obra fragmenta o corpo e a história, alinhando-se à estética barroca de entranhas expostas.</p>
+                </div>
+            </section>
+
+            <section class="panel bg-[#050505] px-20 flex flex-col justify-center items-center">
+                <div class="w-full max-w-5xl aspect-video bg-zinc-900/50 reveal-mask scroll-reveal overflow-hidden relative mb-10 p-4 flex justify-center items-center">
+                    <img src="ob4.jpg" class="w-full h-full object-contain img-parallax">
+                    <div class="absolute top-6 left-6 bg-[#751414] px-4 py-1 text-[10px] tracking-[0.3em] uppercase">Obra em Destaque</div>
+                </div>
+                <div class="text-center max-w-3xl">
+                    <span class="text-xs tracking-[0.2em] uppercase text-gray-500">Obra Destaque</span>
+                    <h3 class="font-serif text-7xl mt-2 mb-4 italic">Azulejões <br>(com uma mãozinha)</h3>
+                    <p class="text-gray-400 leading-relaxed text-sm">"Azulejões" é uma instalação icônica de Adriana Varejão composta por 100 telas grandes (cada), pintadas a óleo para simular azulejos portugueses. A obra transforma o azulejo, símbolo colonial, em uma "arquitetura virtual" de mar e azul, explorando temas de identidade, história brasileira e a substituição de azulejos originais por réplicas.</p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</section>
+
+<section id="critica" class="py-40 bg-black overflow-hidden relative min-h-screen flex items-center justify-center">
+        
+        <div class="flex whitespace-nowrap marquee opacity-10 absolute left-0 top-0 pointer-events-none items-center h-full z-0 w-max">
+            
+            <img src="fundo1.jpg" class="h-[80vh] w-auto object-cover pr-10 flex-shrink-0">
+            <img src="fundo2.jpg" class="h-[80vh] w-auto object-cover pr-10 flex-shrink-0">
+            <img src="fundo3.jpg" class="h-[80vh] w-auto object-cover pr-10 flex-shrink-0">
+            
+            <img src="fundo1.jpg" class="h-[80vh] w-auto object-cover pr-10 flex-shrink-0">
+            <img src="fundo2.jpg" class="h-[80vh] w-auto object-cover pr-10 flex-shrink-0">
+            <img src="fundo3.jpg" class="h-[80vh] w-auto object-cover pr-10 flex-shrink-0">
+        </div>
+
+        <div class="max-w-4xl mx-auto text-center px-10 relative z-10 mt-20">
+            <p class="uppercase tracking-[0.2em] text-sm text-white/70 mb-8 font-bold">Crítica e Relevância</p>
+            
+            <svg class="w-12 h-12 mx-auto mb-8 text-white/50" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+            
+            <div class="font-serif text-xl md:text-2xl leading-relaxed italic text-[#F4F1E9] space-y-6 hover-target">
+                <p>
+                    Adriana Varejão crítica a narrativa oficial da colonização portuguesa no Brasil, focando na violência, no racismo estrutural e na exploração sexual. Suas obras expõem as "feridas" históricas, utilizando o barroco, azulejos e corpos dilacerados para questionar a formação da identidade brasileira e o legado colonial, muitas vezes com imagens viscerais que denunciam a brutalidade.
+                </p>
+                <p>
+                    É uma das artistas contemporâneas mais influentes do Brasil e do mundo. Tem presença marcante no mercado de arte, com obras em coleções importantes, como a Tate Modern (Londres), Guggenheim (Nova York) e a Fundação Cartier (Paris), além de prêmios como a medalha de Chevalier de l'Ordre des Arts et des Lettres da França. A artista possui um pavilhão dedicado às suas obras no Instituto Inhotim, considerado o maior museu a céu aberto do mundo.
+                </p>
+            </div>
+        </div>
+    </section>
+
+   <section id="referencias" class="py-32 px-10 max-w-5xl mx-auto">
+        <h2 class="font-serif text-5xl text-[#1B3B6F] mb-16 border-b-2 border-[#1B3B6F] pb-4">Referências</h2>
+        
+        <div class="space-y-6">
+            
+            <a href="https://www.escritoriodearte.com/artista/adriana-varejao" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center py-6 border-b border-black/10 hover-target cursor-pointer group w-full">
+                <div class="overflow-hidden pr-4">
+                    <h4 class="font-serif text-2xl font-bold group-hover:text-[#751414] transition-colors truncate">Biografia e Estilo Artístico</h4>
+                    <p class="text-sm text-gray-500 mt-2 truncate">https://www.escritoriodearte.com/artista/adriana-varejao</p>
+                </div>
+                <span class="text-2xl transform transition-transform group-hover:translate-x-2 flex-shrink-0">→</span>
+            </a>
+
+            <a href="https://enciclopedia.itaucultural.org.br/obras/93247-varal" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center py-6 border-b border-black/10 hover-target cursor-pointer group w-full">
+                <div class="overflow-hidden pr-4">
+                    <h4 class="font-serif text-2xl font-bold group-hover:text-[#751414] transition-colors truncate">Obra: Varal</h4>
+                    <p class="text-sm text-gray-500 mt-2 truncate">https://enciclopedia.itaucultural.org.br/obras/93247-varal</p>
+                </div>
+                <span class="text-2xl transform transition-transform group-hover:translate-x-2 flex-shrink-0">→</span>
+            </a>
+
+            <a href="https://enciclopedia.itaucultural.org.br/obras/105136-natividade" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center py-6 border-b border-black/10 hover-target cursor-pointer group w-full">
+                <div class="overflow-hidden pr-4">
+                    <h4 class="font-serif text-2xl font-bold group-hover:text-[#751414] transition-colors truncate">Obra: Natividade</h4>
+                    <p class="text-sm text-gray-500 mt-2 truncate">https://enciclopedia.itaucultural.org.br/obras/105136-natividade</p>
+                </div>
+                <span class="text-2xl transform transition-transform group-hover:translate-x-2 flex-shrink-0">→</span>
+            </a>
+            
+            <a href="https://revistacontinente.com.br/edicoes/223/adriana-varejao" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center py-6 border-b border-black/10 hover-target cursor-pointer group w-full">
+                <div class="overflow-hidden pr-4">
+                    <h4 class="font-serif text-2xl font-bold group-hover:text-[#751414] transition-colors truncate">Obra: Azulejões com uma mãozinha</h4>
+                    <p class="text-sm text-gray-500 mt-2 truncate">https://revistacontinente.com.br/edicoes/223/adriana-varejao</p>
+                </div>
+                <span class="text-2xl transform transition-transform group-hover:translate-x-2 flex-shrink-0">→</span>
+            </a>
+
+            <a href="https://www.instagram.com/p/CvaRnk9pumw/?igsh=cG9teWx0OWFhcmw5" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center py-6 border-b border-black/10 hover-target cursor-pointer group w-full">
+                <div class="overflow-hidden pr-4">
+                    <h4 class="font-serif text-2xl font-bold group-hover:text-[#751414] transition-colors truncate">Obra: Saunas e Banhos</h4>
+                    <p class="text-sm text-gray-500 mt-2 truncate">https://www.instagram.com/p/CvaRnk9pumw/</p>
+                </div>
+                <span class="text-2xl transform transition-transform group-hover:translate-x-2 flex-shrink-0">→</span>
+            </a>
+
+            <a href="https://www.galerialiviadoblas.com.br/blog/a-carreira-critica-da-polemica-adriana-varejao/" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center py-6 border-b border-black/10 hover-target cursor-pointer group w-full">
+                <div class="overflow-hidden pr-4">
+                    <h4 class="font-serif text-2xl font-bold group-hover:text-[#751414] transition-colors truncate">Crítica Artística</h4>
+                    <p class="text-sm text-gray-500 mt-2 truncate">https://www.galerialiviadoblas.com.br/blog/a-carreira-critica-da-polemica-adriana-varejao/</p>
+                </div>
+                <span class="text-2xl transform transition-transform group-hover:translate-x-2 flex-shrink-0">→</span>
+            </a>
+
+            <a href="https://arteref.com/arte-contemporanea/adriana-varejao-biografia-e-principais-obras/" target="_blank" rel="noopener noreferrer" class="flex justify-between items-center py-6 border-b border-black/10 hover-target cursor-pointer group w-full">
+                <div class="overflow-hidden pr-4">
+                    <h4 class="font-serif text-2xl font-bold group-hover:text-[#751414] transition-colors truncate">Relevância Artística</h4>
+                    <p class="text-sm text-gray-500 mt-2 truncate">https://arteref.com/arte-contemporanea/adriana-varejao-biografia-e-principais-obras/</p>
+                </div>
+                <span class="text-2xl transform transition-transform group-hover:translate-x-2 flex-shrink-0">→</span>
+            </a>
+
+        </div>
+    </section>
+
+    <footer class="bg-black text-white text-center py-10 text-xs tracking-widest uppercase">
+        Isabella dos Santos • Sara Julia de Oliveira Farias • Tainá Isidio • Letícia Matos • Sabrina Medeiros • Mirella Sotero
+    </footer>
+
+    <script>
+        // 1. Lenis (Smooth Scroll)
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 2. Cursor Customizado
+        const cursor = document.getElementById('cursor');
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.15, ease: "power2.out" });
+        });
+
+        // 3. GSAP Animações Iniciais
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from(".title-anim", {
+            y: 100, opacity: 0, duration: 1.5, stagger: 0.2, ease: "power4.out", delay: 0.2
+        });
+        
+        gsap.from(".scale-y-anim", {
+            scaleY: 0, duration: 1.5, ease: "power4.inOut", delay: 1
+        });
+
+        // 4. Parallax no texto do fundo da Hero
+        gsap.to(".parallax-bg", {
+            y: 300,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#home",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        // 5. Máscaras de Revelação de Imagem
+        const reveals = document.querySelectorAll('.scroll-reveal');
+        reveals.forEach(el => {
+            ScrollTrigger.create({
+                trigger: el,
+                start: "top 75%",
+                onEnter: () => el.classList.add('visible')
+            });
+        });
+
+        // 6. Scroll Horizontal (Obras)
+        const horizontalWrapper = document.getElementById('horizontal-wrapper');
+        const horizontalCont = document.querySelector('.horizontal-container');
+
+        let scrollTween = gsap.to(horizontalCont, {
+            x: () => -(horizontalCont.scrollWidth - window.innerWidth),
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#obras",
+                pin: true,
+                scrub: 1,
+                end: () => "+=" + horizontalCont.scrollWidth
+            }
+        });
+
+        // Parallax nas imagens de dentro do scroll horizontal
+        gsap.utils.toArray('.img-parallax').forEach(img => {
+            gsap.to(img, {
+                x: 100, 
+                ease: "none",
+                scrollTrigger: {
+                    trigger: img.parentElement,
+                    containerAnimation: scrollTween,
+                    start: "left right",
+                    end: "right left",
+                    scrub: true
+                }
+            });
+        });
+
+        // 7. Animação do Marquee
+        gsap.to(".marquee", {
+            xPercent: -50,
+            repeat: -1,
+            duration: 75,
+            ease: "none"
+        });
+
+        // Bloqueia o clique do botão direito do mouse
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // 8. Lógica da Barra Lateral (Scrollspy)
+        const sections = ["#home", "#biografia", "#estilo", "#obras", "#critica", "#referencias"];
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        sections.forEach((sec, index) => {
+            ScrollTrigger.create({
+                trigger: sec,
+                start: "top center", // Ativa quando o topo da seção chega no meio da tela
+                end: "bottom center", // Desativa quando o fim da seção passa do meio
+                onToggle: self => {
+                    if(self.isActive) {
+                        // Remove a classe 'active' de todos e adiciona só no atual
+                        navDots.forEach(dot => dot.classList.remove('active'));
+                        if(navDots[index]) navDots[index].classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Fazer os botões da barra lateral e do menu rolarem suavemente até a seção
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    lenis.scrollTo(target, { duration: 1.5 }); // Usa o Lenis para o scroll suave
+                }
+            });
+        });
+    </script>
+</body>
+</html>
